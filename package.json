@@ -1,9 +1,9 @@
 {
   "name": "table-dragger",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Drag and sort columns and rows of table",
   "author": "sindu12jun <imgonnalovetheworld@gmail.com>",
-  "main": "dist/table-dragger.js",
+  "main": "dist/table-dragger.min.js",
   "repository": {
     "type": "git",
     "url": "sindu12jun/SortableTable"
@@ -19,21 +19,8 @@
     "src",
     "dist"
   ],
-  "keywords": [
-    "dom",
-    "table",
-    "drag",
-    "sort",
-    "row",
-    "column"
-  ],
   "scripts": {
-    "build": "webpack --progress --hide-modules --config  webpack.js",
-    "builddocs": "webpack --progress --hide-modules && set NODE_ENV=production webpack --progress --hide-modules",
-    "docs": "webpack-dev-server --inline --hot --quiet",
-    "gpages": "gh-pages -d build",
-    "postversion": "git push && git push --tags",
-    "version": "npm run build && git add -A dist"
+    "build": "webpack --progress --hide-modules --config  webpack.js"
   },
   "dependencies": {
     "crossvent": "^1.5.5",
