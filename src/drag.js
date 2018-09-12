@@ -143,7 +143,9 @@ export default class Drag {
     }
     const table = this.el;
     const list = Array.from(table.rows);
-    sort({ list, parent: list[to].parentElement, from, to });
+    sort({
+      list, parent: list[to].parentElement, from, to,
+    });
   }
 
   static create (el, options) {
@@ -151,21 +153,16 @@ export default class Drag {
     return d && d.dragger;
   }
 
-  static version = '1.0';
+  static get version() { return '1.0'; }
 }
 
 function checkIsTable (ele) {
   return ele
-    &&
-    typeof ele === 'object'
-    &&
-    'nodeType' in ele
-    &&
-    ele.nodeType === 1
-    &&
-    ele.cloneNode
-    &&
-    ele.nodeName === 'TABLE';
+    && typeof ele === 'object'
+    && 'nodeType' in ele
+    && ele.nodeType === 1
+    && ele.cloneNode
+    && ele.nodeName === 'TABLE';
 }
 
 function isLeftButton (e) {

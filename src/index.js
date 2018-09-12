@@ -4,6 +4,4 @@
 import './main.css';
 import Drag from './drag';
 
-const create = (el, options) => Drag.create(el, options);
-export default create;
-module.exports = create;
+export default (el, options) => Drag.create(el, options);
