@@ -20,7 +20,9 @@ let bodyPaddingRight;
 let bodyOverflow;
 export default class Dragger {
   constructor ({ originTable, mode }) {
-    const { dragger, cellIndex, el: originEl, options } = originTable;
+    const {
+      dragger, cellIndex, el: originEl, options,
+    } = originTable;
     const fakeTables = this.fakeTables = buildTables(originEl, mode);
 
     bodyPaddingRight = parseInt(document.body.style.paddingRight, 0) || 0;
@@ -68,7 +70,9 @@ export default class Dragger {
   }
 
   onDragend (droppedItem) {
-    const { originTable: { el: originEl }, dragger, index, mode, el } = this;
+    const {
+      originTable: { el: originEl }, dragger, index, mode, el,
+    } = this;
     css(document.body, { overflow: bodyOverflow, 'padding-right': `${bodyPaddingRight}px` });
     this.dragger.dragging = false;
     const from = index;
@@ -78,7 +82,9 @@ export default class Dragger {
   }
 
   onShadow (draggingItem) {
-    const { originTable: { el: originEl }, dragger, index, el, mode } = this;
+    const {
+      originTable: { el: originEl }, dragger, index, el, mode,
+    } = this;
     const from = index;
     const to = Array.from(el.children).indexOf(draggingItem);
     dragger.emit('shadowMove', from, to, originEl, mode);
@@ -126,7 +132,7 @@ export default class Dragger {
     const attr = mode === 'column' ? 'margin-right' : 'margin-bottom';
     const l = el.children.length;
     Array.from(el.children).forEach((li, dex) => {
-      /* eslint-disable no-param-reassign*/
+      /* eslint-disable no-param-reassign */
       const table = li && li.querySelector('table');
       if (this.options.onlyBody && mode === 'row' && !Array.from(table.children).some(o => o.nodeName === 'TBODY')) {
         li.classList.add(classes.static);
@@ -155,13 +161,13 @@ export default class Dragger {
         const t = fakeTables[index];
         css(t, { width: `${w}px` });
         css(t.rows[0].children[0], { width: `${w}px` });
-      }
+      },
     );
     // calculate height of every cell
     const rowHeights = Array.from(originEl.rows)
       .map(row => row.children[0].getBoundingClientRect().height);
     fakeTables.forEach((t) => {
-      /* eslint-disable no-param-reassign*/
+      /* eslint-disable no-param-reassign */
       Array.from(t.rows).forEach((row, index) => {
         css(row, { height: `${rowHeights[index]}px` });
       });
@@ -174,7 +180,7 @@ export default class Dragger {
     const cells = getLongestRow(originEl).children;
     const w = originEl.getBoundingClientRect().width;
     // 行排列时计算每一行各个cell宽度
-    /* eslint-disable no-param-reassign*/
+    /* eslint-disable no-param-reassign */
     fakeTables.forEach((t) => {
       css(t, { width: `${w}px` });
       Array.from(t.rows[0].children).forEach((cell, i) => {
@@ -190,7 +196,9 @@ export default class Dragger {
 
 // input:clone(originTable)
 function origin2DragItem (liTable) {
-  css(liTable, { 'table-layout': 'fixed', width: 'initial', height: 'initial', padding: 0, margin: 0 });
+  css(liTable, {
+    'table-layout': 'fixed', width: 'initial', height: 'initial', padding: 0, margin: 0,
+  });
   ['width', 'height', 'id'].forEach((p) => {
     liTable.removeAttribute(p);
   });
@@ -246,8 +254,7 @@ function buildRowTables (table) {
 }
 
 function buildColumnTables (table) {
-  return Array.from(getLongestRow(table).children).map((cell, index) =>
-    getColumnAsTableByIndex(table, index));
+  return Array.from(getLongestRow(table).children).map((cell, index) => getColumnAsTableByIndex(table, index));
 }
 
 function buildTables (table, mode) {

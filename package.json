@@ -23,7 +23,6 @@
     "build": "webpack --progress --hide-modules --config  webpack.js"
   },
   "dependencies": {
-    "crossvent": "^1.5.5",
     "dragula-with-animation": "^3.7.2"
   },
   "devDependencies": {

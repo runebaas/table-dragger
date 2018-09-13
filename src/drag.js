@@ -20,9 +20,9 @@ export default class Drag {
       onlyBody: false,
       animation: 300,
     };
-    const options = this.options = Object.assign({}, defaults, userOptions);
-    const { mode } = options;
-    if (mode === 'free' && !options.dragHandler) {
+    this.options = Object.assign({}, defaults, userOptions);
+    const { mode } = this.options;
+    if (mode === 'free' && !this.options.dragHandler) {
       throw new Error('table-dragger: please specify dragHandler in free mode');
     }
 
@@ -30,17 +30,17 @@ export default class Drag {
       this[m] = this[m].bind(this);
     });
 
-    const dragger = this.dragger = emitter({
+    this.dragger = emitter({
       dragging: false,
       destroy: this.destroy,
     });
-    dragger.on('drop', (from, to, originEl, realMode) => {
+    this.dragger.on('drop', (from, to, originEl, realMode) => {
       (realMode === 'column' ? this.sortColumn : this.sortRow)(from, to);
     });
 
     let handlers;
-    if (options.dragHandler) {
-      handlers = table.querySelectorAll(options.dragHandler);
+    if (this.options.dragHandler) {
+      handlers = table.querySelectorAll(this.options.dragHandler);
       if (handlers && !handlers.length) {
         throw new Error('table-dragger: no element match dragHandler selector');
       }
@@ -61,9 +61,9 @@ export default class Drag {
   }
 
   bindEvents () {
-    for (const e of this.handlers) {
+    this.handlers.forEach((e) => {
       touchy(e, 'add', 'mousedown', this.onTap);
-    }
+    });
   }
 
   onTap (event) {
@@ -116,9 +116,9 @@ export default class Drag {
   }
 
   destroy () {
-    for (const h of this.handlers) {
+    this.handlers.forEach((h) => {
       touchy(h, 'remove', 'mousedown', this.onTap);
-    }
+    });
     this.el.classList.remove(classes.originTable);
   }
 
@@ -190,9 +190,9 @@ function emitter (thing = {}) {
     if (!evt[type]) {
       return;
     }
-    for (const fn of evt[type]) {
+    evt[type].forEach((fn) => {
       fn(...args);
-    }
+    });
   };
   return thing;
 }
